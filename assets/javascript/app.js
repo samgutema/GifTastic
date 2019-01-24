@@ -26,76 +26,93 @@ function renderButtons() {
     for (var i = 0; i < cars.length; i++) {
 
         var a = $("<button>");
-        a.addClass("cars");
+        a.addClass("carsz");
         a.attr("data-name", cars[i]);
         a.text(cars[i]);
         $("#cars-view").append(a);
     }
 
 
-    $(".cars").on("click", function () {
-        event.preventDefault();
-
-        renderButtons()
-
-        $("#gifs-appear-here").empty();
-
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-            cars + "&api_key=IEqCNFDHg7soBBmM5ue5Jn43eTe8vuNo&limit=4";
-
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        })
-            .then(function (response) {
-            
-                var results = response.data;
-
-                a.attr("data-name", cars[i]);
-
-
-                for (var i = 0; i < results.length; i++) {
-
-
-                    var p = $("<p>").text("Rating: " + results[i].rating);
-
-                    var carsImage = $("<img>");
-                    carsImage.attr("src", results[i].images.fixed_height.url);
-
-                    a.append(p);
-                    a.append(carsImage);
-
-                    $("#gifs-appear-here").prepend(a);
-                }
 
 
 
 
 
-            })
-
-
-     
-
-
-    })
-
-
-
-
-$(".cars").hover(function () {
-    $(this).stop().fadeTo(500, .5);
-}, function() {
-    $(this).stop().fadeTo(500, 1); 
+    $(".carsz").hover(function () {
+        $(this).stop().fadeTo(500, .5);
+    }, function () {
+        $(this).stop().fadeTo(500, 1);
 
     }
-)
+    )
+
 
 
 
 
 
 }
+
+$(".cars").on("click", function () {
+    // $("#gifs-appear-here").append(a);
+    $("#gifs-appear-here").empty();
+
+
+    var name = $(this).attr("data-id");
+
+    renderButtons()
+
+
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        cars + "&api_key=IEqCNFDHg7soBBmM5ue5Jn43eTe8vuNo&limit=2";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+        .then(function (response) {
+
+            var results = response.data;
+
+
+            renderButtons()
+
+            
+
+            for (var j = 0; j < results.length; j++) {
+                var gifDiv = $("<div>");
+
+
+                var p = $("<p>").text("Rating: " + results[j].rating);
+
+                var carsImage = $("<img>");
+                carsImage.attr("src", results[j].images.fixed_height.url);
+
+                gifDiv.append(p);
+                gifDiv.append(carsImage);
+
+                $("#gifs-appear-here").prepend(gifDiv);
+            }
+
+
+            var state = $(this).attr("data-state");
+
+            if (state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            } else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+            }
+
+
+        })
+
+
+
+
+})
+
 
 $("#carAdd").on("click", function (event) {
 
@@ -105,21 +122,15 @@ $("#carAdd").on("click", function (event) {
     cars.push(car);
 
     renderButtons();
+    $("#gifs-appear-here").empty();
 
-    var state = $(this).attr("data-state");
 
-    if (state === "still") {
-        $(this).attr("src", $(this).attr("data-animate"));
-        $(this).attr("data-state", "animate");
-    } else {
-        $(this).attr("src", $(this).attr("data-still"));
-        $(this).attr("data-state", "still");
-    }
+
+
 
 
 
 });
-
 
 renderButtons();
 
