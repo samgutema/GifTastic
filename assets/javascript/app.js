@@ -15,8 +15,8 @@
 
 //http://api.giphy.com/v1/gifs/search?q=cars&api_key=IEqCNFDHg7soBBmM5ue5Jn43eTe8vuNo&limit=4
 
+var cars = ["Toyota", "Honda", "Dodge", "Audi"];
 
-var cars = ["classic cars", "modern cars", "old school cars", "electric cars"];
 
 function renderButtons() {
 
@@ -33,25 +33,25 @@ function renderButtons() {
     }
 
 
-
-    $("button").on("click", function () {
+    $(".cars").on("click", function () {
         event.preventDefault();
+
+        renderButtons()
 
         $("#gifs-appear-here").empty();
 
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-            cars + "&api_key=IEqCNFDHg7soBBmM5ue5Jn43eTe8vuNo&limit=2";
+            cars + "&api_key=IEqCNFDHg7soBBmM5ue5Jn43eTe8vuNo&limit=4";
 
         $.ajax({
             url: queryURL,
             method: "GET"
         })
             .then(function (response) {
-                console.log(queryURL);
-
-                console.log(response);
+            
                 var results = response.data;
 
+                a.attr("data-name", cars[i]);
 
 
                 for (var i = 0; i < results.length; i++) {
@@ -75,16 +75,7 @@ function renderButtons() {
             })
 
 
-        var state = $(this).attr("data-state");
-
-        if (state === "still") {
-            $(this).attr("src", $(this).attr("data-animate"));
-            $(this).attr("data-state", "animate");
-        } else {
-            $(this).attr("src", $(this).attr("data-still"));
-            $(this).attr("data-state", "still");
-        }
-
+     
 
 
     })
@@ -92,7 +83,13 @@ function renderButtons() {
 
 
 
+$(".cars").hover(function () {
+    $(this).stop().fadeTo(500, .5);
+}, function() {
+    $(this).stop().fadeTo(500, 1); 
 
+    }
+)
 
 
 
@@ -109,8 +106,21 @@ $("#carAdd").on("click", function (event) {
 
     renderButtons();
 
+    var state = $(this).attr("data-state");
+
+    if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
+
+
 
 });
 
 
 renderButtons();
+
+

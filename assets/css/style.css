@@ -1,8 +1,45 @@
-.jumbotrin {
+.jumbotron {
 align-content: center;
-margin
+align-content: center;
+background: rgb(125, 125, 221);
+margin-left: 100px;
+margin-right: 100px;
+align-content: center;
+
 }
-/* 
-#cars {
-    background: red;
+
+/* #cars {
+margin-left: 700px;
+}
+
+#carSearch{
+
+    margin-left: 660px;
+
+
+}
+
+#carAdd {
+
+    margin-left: 710px;
+
+
+
 } */
+
+body{
+    background: rgb(180, 133, 133);
+}
+
+
+.mainB {
+
+    margin-left: 100px;
+margin-right: 100px;
+}
+
+.cars{
+    border : solid;
+    border-color: rgb(95, 53, 53);
+    padding: 5px;
+}
