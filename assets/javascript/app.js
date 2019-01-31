@@ -46,7 +46,7 @@
             a.attr("data-name", cars[i]); 
             a.text(cars[i]); 
 
-            $("#cars-view").prepend(a); 
+            $("#cars-view").append(a); 
         }
     }
 
